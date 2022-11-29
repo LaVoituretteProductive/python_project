@@ -1,7 +1,7 @@
 # Chemin dossier contenant l'ensemble des textes, vérifier si ce dossier existe et si celui-ci contient des fichiers
 # -*- coding: utf-8 -*-
 
-import os, sys, collections, wget, re
+import os, sys, collections, wget, re, json
 
 path = './/venv//fichier_projet/'
 
@@ -42,32 +42,51 @@ def text_in_list(files):
         with open(os.path.join(files, filename), 'r', encoding='utf8') as f:
 
             pattern1 = r'}}\n\[\[(.*\n*)*'
-            #print(f.read())
-            #print(len(f.read()))
-            #print(f.read())
-            print(re.findall(r"}}\n\[\[(.*\n*)*", f.read())) # pas possible il faut retirer toute la box de infot met pour ensuite pouvoir traiter le fichier
+            characters = "{}[]=\"\\'!?|*</:>«»"
 
-            #re.sub(pattern, '', org_string)
+            string_dec = f.read()
 
-            lines = f.read().split(".")
+            for x in range(len(characters)):
+                string_dec = string_dec.replace(characters[x], " ")
+            print(type(string_dec))
+
+            try:
+                myregex = re.search(r'Notes et références(.*\n*)*', string_dec)
+                print(type(myregex.group(0)))
+                res = ""
+                res = myregex.group(0).replace(res, "")
+                # print("".join((myregex.group(0))))
+                # res = "".join(myregex).replace(res, "")
+                #print(res)
+            except AttributeError:
+                print("no value")
+                res = string_dec
+
+
+            lines = string_dec.split(".")
             lines.append([item.split(" ") for item in lines])
+            text_list[filename] = lines
+            # print(len(text_list))
+            # print((text_list))
 
-
-
+    return text_list
+    '''
+            #re.sub(pattern, '', org_string)
+            #lines = string_dec.split(".")
+            #lines.append([item.split(" ") for item in lines])
             # regex supprimer la fin de la sélection après les réferences ^\n(== Notes et références ==)(.*\n*)*
-
-
             # prendre après l'infobox }}\n\[\[(.*\n*)*
             #retirer le début [^\}}\n[[](.*\n*)*
             #reboucler pour trier les espaces et les \n du raw par phrases dégagées pour attraper les mots
+            
             #lines = lines.split("\n")
             # lines = lines.split(" ")
             #lines = f.read().split(" ")
             text_list[filename] = lines
             #print(len(text_list))
-            print((text_list))
-
-    return text_list
+            #print((text_list))
+        # return text_list
+    '''
 
 # Pour chaque documents, on va chercher à compter la fréquence des mots pour former un dictionnaire étant l'index des documents
 # supprimer tous les mots ayant quatre ou moins de quatre lettres (c'est un peu brutal mais cela fonctionne assez bien), puis pour chaque mot d'un document, calculer sa fréquence par rapport à la fréquence de ce mot dans l'ensemble des documents du dossier dans lequel il se trouve : c'est l'heuristique du TF.IDF (term frequency inverse documentfreuency) => un mot est remarquable si sa fréquence dans un document est bien supérieure à sa fréquence dans le sous-corpus (mais cette heuristique ne fonctionne bien que si le corpus est assez grand).
@@ -101,6 +120,7 @@ if __name__ == '__main__':
     verification(list_of_soupe)
     list_of_words = text_in_list(path)
     #print(list_of_words)
+    #print(len(list_of_words))
     delete_inf_4(list_of_words)
 
 
