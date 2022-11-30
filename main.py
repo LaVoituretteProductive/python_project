@@ -52,19 +52,18 @@ def text_in_list(files):
 
             try:
                 myregex = re.search(r'Notes et références(.*\n*)*', string_dec)
-                print(type(myregex.group(0)))
-                res = ""
-                res = myregex.group(0).replace(res, "")
+                #print((myregex.group(1)))
+                res = string_dec
+                res = res.replace(myregex.group(0), "")
                 # print("".join((myregex.group(0))))
                 # res = "".join(myregex).replace(res, "")
-                #print(res)
+                print(res)
             except AttributeError:
                 print("no value")
                 res = string_dec
 
-
-            lines = string_dec.split(".")
-            lines.append([item.split(" ") for item in lines])
+            lines = res.split(".")
+            #lines.append([item.split(" ") for item in lines])
             text_list[filename] = lines
             # print(len(text_list))
             # print((text_list))
@@ -119,8 +118,8 @@ if __name__ == '__main__':
     list_of_soupe = set_soupe()
     verification(list_of_soupe)
     list_of_words = text_in_list(path)
-    #print(list_of_words)
-    #print(len(list_of_words))
+    print(list_of_words)
+    print(len(list_of_words))
     delete_inf_4(list_of_words)
 
 
