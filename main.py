@@ -61,19 +61,18 @@ def text_in_list(files):
             except TypeError:
                 print("no regexfind")
 
-            characters = "{}[]=\"\\'!?|*</:>«»"
+            characters = "{}[]=\"\\'!?|*</:>«»()"
             for x in range(len(characters)):
                 string_dec = string_dec.replace(characters[x], " ")
             #print(type(string_dec))
-
-            string_dec = string_dec.replace(".jpg", " ")
-            string_dec = string_dec.replace(".html", " ")
-            string_dec = string_dec.replace(".png", " ")
-            string_dec = string_dec.replace(".pdf", " ")
-            string_dec = string_dec.replace(".org", " ")
-            string_dec = string_dec.replace(".com", " ")
-            string_dec = string_dec.replace(".bnf", " ")
-            string_dec = string_dec.replace(".geo", " ")
+            list_extension = [".jpg",".htlm",".png",".pdf",".org",".com",".bnf",".geo"]
+            for x in range(len(list_extension)):
+                string_dec = string_dec.replace(list_extension[x], " ")
+            #print(type(string_dec))
+            list_mot_exclu = ["(poisson)", "Bourride", "ouvrage", "roman", "citation", "département", "éditeur", "pages", "Cuisine", "ligne", "consulté", "servi", "vignette", "auteur", "éditeur", "année", "ainsi", "Fichier", "aussi", "était", "Infobox", "titre", "cette", "article", "ladepeche", "https", "toujours", "comme", "online", "gallery"]
+            for x in range(len(list_mot_exclu)):
+                string_dec = string_dec.replace(list_mot_exclu[x], " ")
+            #print(type(string_dec))
 
 
 
