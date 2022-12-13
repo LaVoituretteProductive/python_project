@@ -190,7 +190,6 @@ if __name__ == '__main__':
     list_of_words_more4 = (delete_inf_4(dict_of_words))
     #print((list_of_words_more4))
     resfinal = index_function(dict_of_words, list_of_words_more4)
-    print(resfinal)
 
 
 
