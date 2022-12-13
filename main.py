@@ -65,7 +65,7 @@ def text_in_list(files):
                 res = string_dec
                 res = res.replace(myregex.group(0), "")
             except AttributeError:
-                print("no value")
+                #print("no value")
                 res = string_dec
 
             lines = res.split(".")

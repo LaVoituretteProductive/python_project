@@ -14,6 +14,9 @@ if __name__ == '__main__':
 
     for param in data_param:
         if ((param!='recherche.py')&(param in new_dict)):
+            print('')
+            print(" ****************** Le Paramètre " + str(param) + " est trouvé ******************")
+            print('')
             for sentence in new_dict[param]:
                 print(" -------------- PHRASE " + str(sentence) +" --------------")
                 print(new_sentences[sentence])
