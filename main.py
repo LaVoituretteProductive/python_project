@@ -3,6 +3,8 @@
 
 import os, sys, collections, wget, re, json
 
+# You need to create a folder named fichier-project, in the venv or change the path
+
 path = './/venv//fichier_projet/'
 
 # list of links about soupe
